@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="Layout">
+    <head>
+        <title>Busca</title>
+    </head>
+    <section layout:fragment="conteudo">
+
+        <div layout:include="MsgSucesso"></div>
+
+        <div class="panel panel-default panel-borda panel-info">
+            <div class="panel-heading clearfix">
+                <h1 class="panel-title ny-title">Busca</h1>
+                <a class="btn btn-lg ny-link" href="/todos/novo">Novo Título</a>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center col-md-1">Código</th>
+                            <th class="text-center col-xs-4">Descrição</th>
+                            <th class="text-center col-md-1">Data de vencimento</th>
+                            <th class="text-right col-md-1">Valor</th>
+                            <th class="text-center col-md-1">Status</th>
+                            <th class="col-md-1"></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="titulo : ${titulos}">
+                            <td class="text-center" th:text="${titulo.codigo}">1</td>
+                            <td th:text="${titulo.descricao}"></td>
+                            <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+                            <td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td>
+                            <!--                            <td class="text-center">
+                                                            <span class="label label-success" th:text="${titulo.status.descricao}"
+                                                                  th:classappend="${#strings.toString(titulo.status) =='PENDENTE' ? 'label-danger' : (titulo.status) == 'CANCELADO' ? 'label-default' : 'label-success'}">Success</span>
+                                                        </td>-->
+                            <td class="text-center col-md-1"><span class="label"
+                                                                   th:text="${titulo.status.descricao}"
+                                                                   th:classappend="${titulo.status.label}"></span>
+                            </td>
+                            <td class="text-center">
+                                <!--Editar-->
+                                <a class="btn btn-link btn-xs" th:href="@{/todos/{codigo}(codigo=${titulo.codigo})}"
+                                   title="Editar" rel="tooltip" data-placement="top">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <!--Remover-->
+                                <a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confExclusao"
+                                   th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}"
+                                   title="Excluir" rel="tooltip" data-placement="top">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <a class="btn btn-link btn-xs" th:if="${titulo.status.descricao}" title="Receber" rel="tooltip" data-placement="top">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título encontrado</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <!--                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li>
+                                            <a href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <li><a href="#">1</a></li>
+                                        <li><a href="#">2</a></li>
+                                        <li><a href="#">3</a></li>
+                                        <li><a href="#">4</a></li>
+                                        <li><a href="#">5</a></li>
+                                        <li>
+                                            <a href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>-->
+            </div>
+
+            <div layout:include="Dialogox"></div>
+        </div>
+    </section>
+</html>

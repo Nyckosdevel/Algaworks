@@ -1,0 +1,21 @@
+.navbar-brand{
+    padding-top: 12px;
+}
+
+.panel-borda {
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.alert {
+    margin-left:10px;
+    margin-right:10px;
+}
+.ny-link{
+    float: right;
+    padding: 0px;
+}
+.ny-title{
+    float: left;
+    padding-top: 2px;
+}
